@@ -1,0 +1,9 @@
+.idea
+
+Dockerfile
+
+app/config.yaml
+
+data
+vendor
+web

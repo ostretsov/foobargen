@@ -1,0 +1,31 @@
+FROM php:7.1-cli
+
+# installing composer
+RUN apt-get update && apt-get -y install curl sudo rsync git unzip libicu-dev
+RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin
+
+RUN docker-php-ext-install -j$(nproc) intl \
+    && docker-php-ext-install -j$(nproc) intl
+
+#RUN pecl install xdebug-2.5.5 \
+#    && docker-php-ext-enable xdebug
+
+# run as current user
+RUN curl -sS https://gist.githubusercontent.com/ostretsov/8e3112635e8be8e13d8dda03f6e33f96/raw/ceb84e8b8effc409687661dc00da9ad319773e9c/run-as-user > /run-as-user \
+    && chmod 0755 /run-as-user \
+    && apt-get clean \
+
+    # create that users
+    && groupadd dev \
+    && useradd dev -s /bin/sh -m -g dev \
+    && echo "dev:password" | chpasswd \
+    && echo "dev ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers \
+    && rsync -a /root/ /home/dev/ \
+    && chown -R dev:dev /home/dev/ \
+    && chmod 0777 /home/dev
+
+VOLUME /src
+WORKDIR /src
+
+ENTRYPOINT ["/run-as-user"]
+CMD ["/usr/local/bin/php"]

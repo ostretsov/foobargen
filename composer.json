@@ -1,0 +1,26 @@
+{
+    "name": "ostretsov/foobargen",
+    "description": "Simple html generator for podcast.ostretsov.ru web site.",
+    "autoload": {
+        "psr-4": {"Foobargen\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Tests\\": "tests/"}
+    },
+    "require": {
+        "symfony/filesystem": "^3.3",
+        "symfony/finder": "^3.3",
+        "symfony/options-resolver": "^3.3",
+        "erusev/parsedown": "^1.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3"
+    },
+    "license": "GNU GPLv3",
+    "authors": [
+        {
+            "name": "Artem Ostretsov",
+            "email": "artem@ostretsov.ru"
+        }
+    ]
+}
