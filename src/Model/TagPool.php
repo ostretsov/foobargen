@@ -26,13 +26,21 @@ class TagPool
         foreach ($tagNames as $tagName) {
             if (isset($this->pool[$tagName])) {
                 $tag = $this->pool[$tagName];
-                $tag->weightUp();
             } else {
                 $tag = new Tag($tagName);
+                $this->pool[$tagName] = $tag;
             }
             $tags[] = $tag;
         }
 
         return $tags;
+    }
+
+    /**
+     * @return Tag[]
+     */
+    public function getPool(): array
+    {
+        return $this->pool;
     }
 }

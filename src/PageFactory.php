@@ -8,7 +8,9 @@ namespace Foobargen;
 
 
 use Foobargen\Exception\MDFileNotFoundException;
+use Foobargen\Exception\Page\InvalidPathException;
 use Foobargen\Model\Page;
+use Foobargen\Model\Tag;
 use Foobargen\Model\TagPool;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -60,6 +62,12 @@ final class PageFactory
             $value = trim($value);
 
             switch ($key) {
+                case 'path':
+                    if (!preg_match('/^\/.*\/$/', $value)) {
+                        throw new InvalidPathException();
+                    }
+                    $meta[$key] = $value;
+                    break;
                 case 'published':
                     $meta[$key] = new \DateTime($value);
                     break;
@@ -72,7 +80,14 @@ final class PageFactory
         }
         fclose($f);
 
-        return $this->optionsResolver->resolve($meta);
+        $meta = $this->optionsResolver->resolve($meta);
+
+        /** @var Tag $tag */
+        foreach ($meta['tags'] as $tag) {
+            $tag->of($meta['path']);
+        }
+
+        return $meta;
     }
 
     private function getHTMLContent(\SplFileInfo $metaFile): string

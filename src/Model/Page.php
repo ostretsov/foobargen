@@ -6,6 +6,8 @@
 
 namespace Foobargen\Model;
 
+use Foobargen\Exception\Page\PageTitleIsNotDefinedException;
+
 final class Page
 {
     /**
@@ -26,10 +28,15 @@ final class Page
     /**
      * @var string
      */
-    private $content;
+    private $title;
 
     /**
      * @var string
+     */
+    private $content;
+
+    /**
+     * @var string|null
      */
     private $youTubeId;
 
@@ -48,9 +55,14 @@ final class Page
      */
     public function __construct(string $path, \DateTime $publishedAt, string $audioURL, string $content, string $youTubeId = null, array $tags = [])
     {
+        if (!preg_match('/<h1>(.*?)<\/h1>/', $content, $matches)) {
+            throw new PageTitleIsNotDefinedException();
+        }
+
         $this->path = $path;
         $this->publishedAt = $publishedAt;
         $this->audioURL = $audioURL;
+        $this->title = $matches[1];
         $this->content = $content;
         $this->youTubeId = $youTubeId;
         $this->tags = $tags;
@@ -83,7 +95,15 @@ final class Page
     /**
      * @return string
      */
-    public function getYouTubeId(): string
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getYouTubeId(): ?string
     {
         return $this->youTubeId;
     }

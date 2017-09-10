@@ -19,19 +19,51 @@ final class Tag
     private $name;
 
     /**
-     * @var int
+     * @var array
      */
-    private $weight;
+    private $paths;
 
     public function __construct(string $name)
     {
-        $this->id = transliterator_transliterate('Russian-Latin/BGN', $name);
+        $this->id = strtr(transliterator_transliterate('Russian-Latin/BGN', $name), [' ' => '-', '\'' => '', '.' => '_', '@' => 'at_', '`' => '']);
         $this->name = $name;
-        $this->weight = 1;
+        $this->paths = [];
     }
 
-    public function weightUp(): void
+    public function of(string $path): void
     {
-        ++$this->weight;
+        $this->paths[] = $path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWeight(): int
+    {
+        return count($this->paths);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPaths(): array
+    {
+        return $this->paths;
     }
 }

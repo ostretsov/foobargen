@@ -1,0 +1,10 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Архив{% endblock %}
+
+{% block content %}
+    <h1>{{ block('title') }}</h1>
+    {% for page in pages %}
+        {{ block('page_teaser', 'page.html.twig') }}
+    {% endfor %}
+{% endblock %}

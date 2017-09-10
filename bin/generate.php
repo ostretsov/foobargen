@@ -6,4 +6,4 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-(new \Foobargen\Generator('data', 'web'))->generate();
+(new \Foobargen\Generator('data', 'web', 'deadsimple'))->generate();

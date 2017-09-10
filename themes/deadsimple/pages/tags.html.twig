@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Теги ({{ tags|length }}){% endblock %}
+
+{% block content %}
+    <h1>{{ block('title') }}</h1>
+    <ul>
+        {% for tag in tags %}
+            {% set links %}
+                {%- set i = 1 -%}
+                {%- for path in tag.paths %}<a href="{{ path }}">{{ i }}</a>{% if not loop.last %}, {% endif %}{% set i = i + 1 %}{% endfor -%}
+            {% endset %}
+            <li>{{ tag.name }} ({{ links }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

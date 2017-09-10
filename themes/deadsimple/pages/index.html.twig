@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    {% set page = pages|first %}
+    {{ block('page', 'page.html.twig') }}
+    <div>
+        <a href="{{ page.path }}">
+            К обсуждению
+        </a>
+    </div>
+
+    <h2 style="padding-top: 50px;">Прошлые эпизоды</h2>
+    {% for page in pages[1:3] %}
+        {{ block('page_teaser', 'page.html.twig') }}
+    {% endfor %}
+    <div style="padding-bottom: 25px;">
+        <a href="/archive/">Архив</a>
+    </div>
+{% endblock %}
