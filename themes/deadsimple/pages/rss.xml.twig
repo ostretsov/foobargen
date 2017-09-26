@@ -10,6 +10,7 @@
         <managingEditor>artem@ostretsov.ru (Artem Ostretsov)</managingEditor>
         {% for page in pages[0:10] %}
             <item>
+                <title>{{ page.title }}</title>
                 <description>[CDATA[{{ page.content}}]]</description>
                 <pubDate>{{ page.publishedAt|date('D, d M y H:i:s O') }}</pubDate>
                 <guid>http://podcast.ostretsov.ru{{ page.path }}</guid>
