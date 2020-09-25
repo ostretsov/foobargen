@@ -1,4 +1,4 @@
-NAME = ostretsov_foobargen
+NAME = foobargen
 
 .PHONY: build
 build:
@@ -19,3 +19,11 @@ nginx:
 .PHONY: video
 video:
 	ffmpeg -loop 1 -r 2 -i $(POSTER) -i $(MP3) -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -c:v libx264 -preset slow -tune stillimage -crf 18 -c:a copy -shortest -pix_fmt yuv420p -threads 0 $(OUT)
+
+.PHONY: generate
+generate:
+	docker run -ti -w /src -v $(PWD):/src $(NAME) "php bin/generate.php"
+
+.PHONY: rsync
+rsync:
+	rsync -avz ./web/* root@78.47.14.220:/var/www/html

@@ -3,7 +3,7 @@
 {% block title %}Теги ({{ tags|length }}){% endblock %}
 
 {% block content %}
-    <h1>{{ block('title') }}</h1>
+    <h1 class="episode-title">{{ block('title') }}</h1>
     <ul>
         {% for tag in tags %}
             {% set links %}

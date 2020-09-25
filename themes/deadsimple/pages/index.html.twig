@@ -19,3 +19,7 @@
         <a href="/archive/">Архив</a>
     </div>
 {% endblock %}
+
+{% block before_body_ends %}
+    <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us4.list-manage.com","uuid":"5bafd6d752d8bf385155695b9","lid":"f9c165d87f","uniqueMethods":true}) })</script>
+{% endblock %}
